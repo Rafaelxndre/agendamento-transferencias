@@ -1,16 +1,27 @@
 <template>
-  <form @submit.prevent="agendarTransferencia">
-    <input v-model="transferencia.contaOrigem" placeholder="Conta de Origem" />
-    <input v-model="transferencia.contaDestino" placeholder="Conta de Destino" />
-    <input v-model="transferencia.valor" type="number" placeholder="Valor" />
-    <input v-model="transferencia.dataTransferencia" type="date" />
+  <div>
+    <h2>Agendar Transferência</h2>
+    <form @submit.prevent="agendarTransferencia">
+      <label>Conta de Origem:</label>
+      <input v-model="transferencia.contaOrigem" required />
 
-    <button type="submit">Agendar Transferência</button>
-  </form>
+      <label>Conta de Destino:</label>
+      <input v-model="transferencia.contaDestino" required />
+
+      <label>Valor:</label>
+      <input type="number" v-model="transferencia.valor" required />
+
+      <label>Data da Transferência:</label>
+      <input type="date" v-model="transferencia.dataTransferencia" required />
+
+      <button type="submit">Agendar</button>
+    </form>
+    <p v-if="mensagem" class="mensagem">{{ mensagem }}</p>
+  </div>
 </template>
 
 <script>
-import api from "@/services/api";
+import axios from "axios";
 
 export default {
   data() {
@@ -21,18 +32,28 @@ export default {
         valor: null,
         dataTransferencia: "",
       },
+      mensagem: "",
     };
   },
   methods: {
     async agendarTransferencia() {
-      try {
-        await api.post("/transferencias", this.transferencia);
-        alert("Transferência agendada com sucesso!");
-        this.$emit("atualizarLista"); // Atualiza a lista após o agendamento
-      } catch (error) {
-        alert("Erro ao agendar transferência.");
-      }
-    },
+  try {
+    await axios.post("http://localhost:8080/transferencias", this.transferencia);
+    this.mensagem = "Transferência agendada com sucesso!";
+    this.$emit("atualizarLista"); // Atualiza a lista após o agendamento
+  } catch (error) {
+    this.mensagem = "Erro ao agendar a transferência. Verifique os dados.";
+    console.error("Erro:", error);
+  }
+},
   },
 };
 </script>
+
+<style scoped>
+.mensagem {
+  margin-top: 10px;
+  font-weight: bold;
+  color: green;
+}
+</style>
