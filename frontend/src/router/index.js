@@ -1,15 +1,13 @@
-import { createRouter, createWebHistory } from 'vue-router';
-import AgendarTransferencia from '../views/AgendarTransferencia.vue';
-import ListaTransferencias from '../views/ListaTransferencias.vue';
+import { createRouter, createWebHistory } from "vue-router";
+import HomeView from "@/views/HomeView.vue";
 
 const routes = [
-  { path: '/', component: ListaTransferencias },
-  { path: '/agendar', component: AgendarTransferencia }
+  { path: "/", component: HomeView },
 ];
 
 const router = createRouter({
   history: createWebHistory(),
-  routes
+  routes,
 });
 
 export default router;
