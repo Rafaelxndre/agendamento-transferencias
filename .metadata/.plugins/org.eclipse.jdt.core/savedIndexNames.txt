@@ -1,7 +1,0 @@
-INDEX VERSION 1.131+C:\Users\Rafael\Desktop\go2Win\go2Win\.metadata\.plugins\org.eclipse.jdt.core
-498581702.index
-714238700.index
-2725831384.index
-2684876917.index
-1965174767.index
-1865797976.index
